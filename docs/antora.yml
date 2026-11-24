@@ -1,0 +1,7 @@
+---
+name: "ebs-csi-driver"
+title: "AWS EBS CSI Driver"
+version: true
+start_page: README.adoc
+nav:
+  - "modules/ROOT/nav.adoc"

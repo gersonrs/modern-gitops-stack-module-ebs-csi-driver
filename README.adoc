@@ -1,0 +1,52 @@
+= modern-gitops-stack-module-ebs-csi-driver
+// Document attributes to replace along the document
+:aws-ebs-csi-driver-chart-version: 2.28.1
+:original-repo-url: https://github.com/kubernetes-sigs/aws-ebs-csi-driver
+
+A https://modern-gitops-stack.io[Modern GitOps Stack] module to deploy the AWS EBS CSI driver, which provisions EBS volumes for PersistentVolumeClaims on EKS.
+
+The aws-ebs-csi-driver chart used by this module is shipped in this repository as well, in order to avoid any unwanted behaviors caused by unsupported versions.
+
+[cols="1,1,1",options="autowidth,header"]
+|===
+|Current Chart Version |Original Repository |Default Values
+|*2.28.1* |https://github.com/kubernetes-sigs/aws-ebs-csi-driver/tree/main/charts/aws-ebs-csi-driver[aws-ebs-csi-driver] |https://artifacthub.io/packages/helm/aws-ebs-csi-driver/aws-ebs-csi-driver/2.28.1?modal=values[`values.yaml`]
+|===
+
+== Usage
+
+This module can be declared by adding the following block to your Terraform configuration:
+
+[source,terraform]
+----
+module "ebs-csi-driver" {
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-ebs-csi-driver.git?ref=<RELEASE>"
+
+  cluster_name   = local.cluster_name
+  base_domain    = local.base_domain
+  subdomain      = local.subdomain
+  cluster_issuer = local.cluster_issuer
+  app_autosync   = local.app_autosync
+  create_role    = true
+
+  dependency_ids = {
+    argocd = module.argocd.id
+  }
+}
+----
+
+The application is deployed to the `kube-system` namespace.
+
+== Technical Reference
+
+=== Dependencies
+
+==== `module.argocd.id`
+
+Argo CD applies the driver.
+
+// BEGIN_TF_DOCS
+// END_TF_DOCS
+
+// BEGIN_TF_TABLES
+// END_TF_TABLES
